@@ -1,21 +1,33 @@
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { State } from '../../redux/store';
+import { getPieces, PieceInfo } from '../../redux/piecesSlice';
 import { FieldBackground } from '../FieldBackground';
 import { Piece } from '../Piece';
 import { FieldContainer } from './style';
 
 interface OwnProps {}
-interface StateProps {}
+interface StateProps {
+    pieces: Array<PieceInfo>;
+}
 interface DispatchProps {}
 
 export type FieldProps = OwnProps & StateProps & DispatchProps;
 
-const Field: React.FC<FieldProps> = () => {
+const Field: React.FC<FieldProps> = ({ pieces }) => {
     return (
         <FieldContainer>
             <FieldBackground />
-            <Piece player={2} type={0} x={2} y={3} />
+            {pieces.map((piece) => (
+                <Piece {...piece} />
+            ))}
         </FieldContainer>
     );
 };
 
-export default connect(null, null)(Field);
+export default connect<StateProps, DispatchProps, OwnProps, State>(
+    createStructuredSelector({
+        pieces: getPieces,
+    }),
+    {}
+)(Field);
