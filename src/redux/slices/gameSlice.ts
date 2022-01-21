@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { createSelector } from 'reselect';
+import { ColorType } from '../../types';
 import type { State } from '../store';
 
 export interface SelectedPieceInfo {
     index: number;
+    type: ColorType;
     x: number;
     y: number;
 }
@@ -16,7 +18,7 @@ interface GameState {
 
 const initialState: GameState = {
     isFirstTurn: true,
-    currentPlayer: 2,
+    currentPlayer: 1,
     selectedPiece: null,
 };
 

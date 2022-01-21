@@ -33,10 +33,25 @@ const initialState: FieldState = [
 export const fieldSlice = createSlice({
     name: 'field',
     initialState,
-    reducers: {},
+    reducers: {
+        setFieldTileValue: (
+            state,
+            action: PayloadAction<{
+                x: number;
+                y: number;
+                value: null | {
+                    player: 1 | 2;
+                    type: ColorType;
+                };
+            }>
+        ) => {
+            const { x, y, value } = action.payload;
+            state[y][x] = value;
+        },
+    },
 });
 
-// export const { setTest } = fieldSlice.actions;
+export const { setFieldTileValue } = fieldSlice.actions;
 
 export const getField = (state: State) => state.field;
 // export const getFieldTest = createSelector(

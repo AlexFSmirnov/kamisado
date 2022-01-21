@@ -6,7 +6,6 @@ import {
     SelectedPieceInfo,
     setSelectedPiece,
 } from '../../redux/slices/gameSlice';
-import { State } from '../../redux/store';
 import { ColorType } from '../../types';
 import { PieceInnerElement, PieceOuterElement } from './style';
 
@@ -48,6 +47,7 @@ const Piece: React.FC<PieceProps> = ({
 
         setSelectedPiece({
             index,
+            type,
             x,
             y,
         });

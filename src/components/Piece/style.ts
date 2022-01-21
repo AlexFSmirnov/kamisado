@@ -25,6 +25,7 @@ export const PieceOuterElement = styled.div<PieceOuterElementProps>`
         ${(props) => (props.y * 100) / PIECE_SIZE}%,
         0
     );
+    transition: transform 300ms;
 
     ${(props) => (props.interactive ? 'cursor: pointer;' : '')}
 `;

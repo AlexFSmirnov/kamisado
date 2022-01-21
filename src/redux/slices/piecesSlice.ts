@@ -31,10 +31,18 @@ const initialState: PiecesState = [
 export const piecesSlice = createSlice({
     name: 'pieces',
     initialState,
-    reducers: {},
+    reducers: {
+        changePiecePosition: (
+            state,
+            action: PayloadAction<{ index: number; x: number; y: number }>
+        ) => {
+            const { index, x, y } = action.payload;
+            state[index] = { ...state[index], x, y };
+        },
+    },
 });
 
-// export const { setTest } = fieldSlice.actions;
+export const { changePiecePosition } = piecesSlice.actions;
 
 export const getPieces = (state: State) => state.pieces;
 
