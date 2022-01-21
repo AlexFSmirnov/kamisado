@@ -1,15 +1,8 @@
 import { useRef, useEffect } from 'react';
-import { connect } from 'react-redux';
 import { FIELD_SIZE, FIELD_CONFIGURATION, TILE_COLORS } from '../../constants';
 import { FieldBackgroundCanvas } from './style';
 
-interface OwnProps {}
-interface StateProps {}
-interface DispatchProps {}
-
-export type FieldBackgroundProps = OwnProps & StateProps & DispatchProps;
-
-const FieldBackground: React.FC<FieldBackgroundProps> = () => {
+const FieldBackground: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
     useEffect(() => {
@@ -35,4 +28,4 @@ const FieldBackground: React.FC<FieldBackgroundProps> = () => {
     );
 };
 
-export default connect(null, null)(FieldBackground);
+export default FieldBackground;

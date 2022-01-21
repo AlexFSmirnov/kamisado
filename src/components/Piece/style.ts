@@ -6,6 +6,7 @@ interface PieceOuterElementProps {
     player: 1 | 2;
     x: number;
     y: number;
+    interactive?: boolean;
 }
 
 export const PieceOuterElement = styled.div<PieceOuterElementProps>`
@@ -24,6 +25,8 @@ export const PieceOuterElement = styled.div<PieceOuterElementProps>`
         ${(props) => (props.y * 100) / PIECE_SIZE}%,
         0
     );
+
+    ${(props) => (props.interactive ? 'cursor: pointer;' : '')}
 `;
 
 interface PieceInnerElementProps {

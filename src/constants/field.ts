@@ -1,5 +1,4 @@
 export const FIELD_MAX_SIZE = 0.9;
-
 export const PIECE_SIZE = 0.7;
 
 export const FIELD_SIZE = 8;

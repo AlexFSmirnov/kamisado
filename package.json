@@ -4,10 +4,10 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "start": "react-scripts start",
+        "start": "TSC_COMPILE_ON_ERROR=true react-scripts start",
+        "build": "TSC_COMPILE_ON_ERROR=true react-scripts build",
         "typescript": "tsc",
         "prettier": "prettier --check \"./src/**/*.{js,jsx,ts,tsx}\"",
-        "build": "react-scripts build",
         "predeploy": "yarn typescript && yarn prettier && yarn build",
         "deploy": "gh-pages -d build"
     },

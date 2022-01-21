@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { createSelector } from 'reselect';
-import { ColorType } from '../types';
-import type { State } from './store';
+import { FIELD_SIZE } from '../../constants';
+import { ColorType } from '../../types';
+import type { State } from '../store';
 
 export interface PieceInfo {
     player: 1 | 2;
@@ -13,13 +14,13 @@ export interface PieceInfo {
 type PiecesState = Array<PieceInfo>;
 
 const initialState: PiecesState = [
-    ...Array.from({ length: 8 }).map((_, i) => ({
+    ...Array.from({ length: FIELD_SIZE }).map((_, i) => ({
         player: 2 as 2,
         type: i as ColorType,
         x: i,
         y: 0,
     })),
-    ...Array.from({ length: 8 }).map((_, i) => ({
+    ...Array.from({ length: FIELD_SIZE }).map((_, i) => ({
         player: 1 as 1,
         type: (7 - i) as ColorType,
         x: i,
