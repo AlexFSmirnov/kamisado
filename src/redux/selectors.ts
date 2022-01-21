@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import { FIELD_SIZE } from '../constants';
+import { Player } from '../enums/player';
 import { getField } from './slices/fieldSlice';
 import { getCurrentPlayer, getSelectedPieceInfo } from './slices/gameSlice';
 
@@ -8,13 +9,14 @@ export const getAvailableTiles = createSelector(
     getCurrentPlayer,
     getSelectedPieceInfo,
     (field, currentPlayer, selectedPieceInfo) => {
+        console.log({ selectedPieceInfo });
         if (selectedPieceInfo === null) {
             return null;
         }
 
         let availableTiles = [];
         const { x: startX, y: startY } = selectedPieceInfo;
-        const yStep = currentPlayer === 1 ? -1 : 1;
+        const yStep = currentPlayer === Player.First ? -1 : 1;
 
         // Straight line
         for (let offset = 1; offset < FIELD_SIZE; ++offset) {

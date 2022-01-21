@@ -1,4 +1,5 @@
 import { FIELD_CONFIGURATION, FIELD_SIZE } from '../constants';
+import { Player } from '../enums/player';
 import { getAvailableTiles } from './selectors';
 import { getField, setFieldTileValue } from './slices/fieldSlice';
 import {
@@ -28,38 +29,36 @@ export const moveTileTo =
             return;
         }
 
-        const { index, type, x: oldX, y: oldY } = selectedPieceInfo;
+        const { type, x: oldX, y: oldY } = selectedPieceInfo;
 
-        const newSelectedColor = FIELD_CONFIGURATION[y][x];
-        const newSelectedPieceIndex =
-            currentPlayer === 1 ? newSelectedColor : 15 - newSelectedColor;
-        const newSelectedPiece = pieces[newSelectedPieceIndex];
+        const newPlayer =
+            currentPlayer === Player.First ? Player.Second : Player.First;
+        const newSelectedColorType = FIELD_CONFIGURATION[y][x];
+        // @ts-ignore Cannot use union types as object keys
+        const newSelectedPiece = pieces[newPlayer][newSelectedColorType];
+        console.log({ newPlayer, newSelectedColorType, newSelectedPiece });
 
-        dispatch(changePiecePosition({ index, x, y }));
+        dispatch(changePiecePosition({ player: currentPlayer, type, x, y }));
         dispatch(
             setFieldTileValue({ x, y, value: { player: currentPlayer, type } })
         );
         dispatch(setFieldTileValue({ x: oldX, y: oldY, value: null }));
 
         if (
-            (currentPlayer === 1 && y === 0) ||
-            (currentPlayer === 2 && y === FIELD_SIZE - 1)
+            (currentPlayer === Player.First && y === 0) ||
+            (currentPlayer === Player.Second && y === FIELD_SIZE - 1)
         ) {
             dispatch(setWonByReachingTop(true));
             dispatch(setSelectedPiece(null));
             return;
         }
 
-        dispatch(
-            setSelectedPiece({
-                index: newSelectedPieceIndex,
-                ...newSelectedPiece,
-            })
-        );
+        dispatch(setSelectedPiece(newSelectedPiece));
         dispatch(swapCurrentPlayer());
 
         if (!getAvailableTiles(getState())?.length) {
             dispatch(swapCurrentPlayer());
             dispatch(setWonByBlocking(true));
+            dispatch(setSelectedPiece(null));
         }
     };

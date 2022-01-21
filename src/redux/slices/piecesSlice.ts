@@ -1,32 +1,49 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { createSelector } from 'reselect';
 import { FIELD_SIZE } from '../../constants';
+import { Player } from '../../enums/player';
 import { ColorType } from '../../types';
 import type { State } from '../store';
 
 export interface PieceInfo {
-    player: 1 | 2;
+    player: Player;
     type: ColorType;
     x: number;
     y: number;
 }
 
-type PiecesState = Array<PieceInfo>;
+type PlayerPieces = {
+    [key in keyof ColorType]: PieceInfo;
+};
 
-const initialState: PiecesState = [
-    ...Array.from({ length: FIELD_SIZE }).map((_, i) => ({
-        player: 2 as 2,
-        type: i as ColorType,
-        x: i,
-        y: 0,
-    })),
-    ...Array.from({ length: FIELD_SIZE }).map((_, i) => ({
-        player: 1 as 1,
-        type: (7 - i) as ColorType,
-        x: i,
-        y: 7,
-    })),
-];
+type PiecesState = {
+    [key in Player]: PlayerPieces;
+};
+
+const initialState: PiecesState = {
+    [Player.First]: Object.fromEntries(
+        Array.from({ length: FIELD_SIZE }).map((_, i) => [
+            i as ColorType,
+            {
+                player: Player.First,
+                type: i as ColorType,
+                x: 7 - i,
+                y: 7,
+            },
+        ])
+    ) as PlayerPieces,
+    [Player.Second]: Object.fromEntries(
+        Array.from({ length: FIELD_SIZE }).map((_, i) => [
+            i as ColorType,
+            {
+                player: Player.Second,
+                type: i as ColorType,
+                x: i,
+                y: 0,
+            },
+        ])
+    ) as PlayerPieces,
+};
 
 export const piecesSlice = createSlice({
     name: 'pieces',
@@ -34,10 +51,16 @@ export const piecesSlice = createSlice({
     reducers: {
         changePiecePosition: (
             state,
-            action: PayloadAction<{ index: number; x: number; y: number }>
+            action: PayloadAction<{
+                player: Player;
+                type: ColorType;
+                x: number;
+                y: number;
+            }>
         ) => {
-            const { index, x, y } = action.payload;
-            state[index] = { ...state[index], x, y };
+            const { player, type } = action.payload;
+            // @ts-ignore Cannot use union types as object keys
+            state[player][type] = action.payload;
         },
     },
 });
@@ -45,11 +68,8 @@ export const piecesSlice = createSlice({
 export const { changePiecePosition } = piecesSlice.actions;
 
 export const getPieces = (state: State) => state.pieces;
-
-// export const getFieldState = (state: State) => state.field;
-// export const getFieldTest = createSelector(
-//     getFieldState,
-//     (state) => state.test
-// );
+export const getPiecesList = createSelector(getPieces, (pieces) =>
+    Object.values(pieces).map(Object.values).flat()
+);
 
 export default piecesSlice.reducer;

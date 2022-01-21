@@ -1,21 +1,18 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { getPieces, PieceInfo } from '../../redux/slices/piecesSlice';
+import { getPiecesList, PieceInfo } from '../../redux/slices/piecesSlice';
 import { FieldBackground } from '../FieldBackground';
+import { getAvailableTiles } from '../../redux/selectors';
+import { getSelectedPieceInfo } from '../../redux/slices/gameSlice';
+import { AvailableTileMarker } from '../AvailableTileMarker';
 import { Piece } from '../Piece';
 import { FieldContainer } from './style';
-import { getAvailableTiles } from '../../redux/selectors';
-import {
-    getSelectedPieceInfo,
-    SelectedPieceInfo,
-} from '../../redux/slices/gameSlice';
-import { AvailableTileMarker } from '../AvailableTileMarker';
 
 interface OwnProps {}
 interface StateProps {
     pieces: Array<PieceInfo>;
     availableTiles: Array<{ x: number; y: number }> | null;
-    selectedPieceInfo: SelectedPieceInfo | null;
+    selectedPieceInfo: PieceInfo | null;
 }
 interface DispatchProps {}
 
@@ -26,6 +23,8 @@ const Field: React.FC<FieldProps> = ({
     availableTiles,
     selectedPieceInfo,
 }) => {
+    console.log({ pieces, availableTiles, selectedPieceInfo });
+
     return (
         <FieldContainer>
             <FieldBackground />
@@ -33,18 +32,14 @@ const Field: React.FC<FieldProps> = ({
                 selectedPieceInfo &&
                 availableTiles.map(({ x, y }) => (
                     <AvailableTileMarker
-                        key={`${x}-${y}-${selectedPieceInfo.index}`}
+                        key={`${x}-${y}-${selectedPieceInfo.type}-${selectedPieceInfo.player}`}
                         selectedPieceInfo={selectedPieceInfo}
                         x={x}
                         y={y}
                     />
                 ))}
-            {pieces.map((piece, index) => (
-                <Piece
-                    key={`${piece.player}-${piece.type}`}
-                    index={index}
-                    {...piece}
-                />
+            {pieces.map((piece) => (
+                <Piece key={`${piece.player}-${piece.type}`} {...piece} />
             ))}
         </FieldContainer>
     );
@@ -52,7 +47,7 @@ const Field: React.FC<FieldProps> = ({
 
 export default connect(
     createStructuredSelector({
-        pieces: getPieces,
+        pieces: getPiecesList,
         availableTiles: getAvailableTiles,
         selectedPieceInfo: getSelectedPieceInfo,
     }),

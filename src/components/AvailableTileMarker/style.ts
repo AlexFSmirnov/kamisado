@@ -1,5 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import { PIECE_SIZE } from '../../constants';
+import { Player } from '../../enums/player';
 
 interface AnimatedPositionInfo {
     x: number;
@@ -50,7 +51,7 @@ export const AvailableTileMarkerOuterElement = styled.div<AnimatedPositionInfo>`
 `;
 
 interface AvailableTileMarkerInnerElementProps {
-    player: 1 | 2;
+    player: Player;
 }
 
 export const AvailableTileMarkerInnerElement = styled.div<AvailableTileMarkerInnerElementProps>`
@@ -60,6 +61,7 @@ export const AvailableTileMarkerInnerElement = styled.div<AvailableTileMarkerInn
     width: 60%;
     height: 60%;
 
-    background-color: ${(props) => (props.player === 1 ? 'white' : 'black')};
-    ${(props) => (props.player === 1 ? 'border-radius: 50%;' : '')}
+    background-color: ${(props) =>
+        props.player === Player.First ? 'white' : 'black'};
+    ${(props) => (props.player === Player.First ? 'border-radius: 50%;' : '')}
 `;

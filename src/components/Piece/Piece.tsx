@@ -1,29 +1,29 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { Player } from '../../enums/player';
 import {
     getCurrentPlayer,
     getIsFirstTurn,
-    SelectedPieceInfo,
     setSelectedPiece,
 } from '../../redux/slices/gameSlice';
+import { PieceInfo } from '../../redux/slices/piecesSlice';
 import { ColorType } from '../../types';
 import { PieceInnerElement, PieceOuterElement } from './style';
 
 interface OwnProps {
-    player: 1 | 2;
+    player: Player;
     type: ColorType;
     x: number;
     y: number;
-    index: number;
 }
 
 interface StateProps {
     isFirstTurn: boolean;
-    currentPlayer: 1 | 2;
+    currentPlayer: Player;
 }
 
 interface DispatchProps {
-    setSelectedPiece: (piece: SelectedPieceInfo) => void;
+    setSelectedPiece: (piece: PieceInfo) => void;
 }
 
 export type PieceProps = OwnProps & StateProps & DispatchProps;
@@ -33,7 +33,6 @@ const Piece: React.FC<PieceProps> = ({
     type,
     x,
     y,
-    index,
     isFirstTurn,
     currentPlayer,
     setSelectedPiece,
@@ -46,7 +45,7 @@ const Piece: React.FC<PieceProps> = ({
         }
 
         setSelectedPiece({
-            index,
+            player,
             type,
             x,
             y,

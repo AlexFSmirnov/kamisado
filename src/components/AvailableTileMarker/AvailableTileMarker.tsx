@@ -1,10 +1,9 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { Player } from '../../enums/player';
 import { moveTileTo } from '../../redux/actions';
-import {
-    getCurrentPlayer,
-    SelectedPieceInfo,
-} from '../../redux/slices/gameSlice';
+import { getCurrentPlayer } from '../../redux/slices/gameSlice';
+import { PieceInfo } from '../../redux/slices/piecesSlice';
 import {
     AvailableTileMarkerInnerElement,
     AvailableTileMarkerOuterElement,
@@ -13,11 +12,11 @@ import {
 interface OwnProps {
     x: number;
     y: number;
-    selectedPieceInfo: SelectedPieceInfo;
+    selectedPieceInfo: PieceInfo;
 }
 
 interface StateProps {
-    currentPlayer: 1 | 2;
+    currentPlayer: Player;
 }
 
 interface DispatchProps {

@@ -1,26 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { createSelector } from 'reselect';
-import { ColorType } from '../../types';
+import { Player } from '../../enums/player';
 import type { State } from '../store';
-
-export interface SelectedPieceInfo {
-    index: number;
-    type: ColorType;
-    x: number;
-    y: number;
-}
+import { PieceInfo } from './piecesSlice';
 
 interface GameState {
     isFirstTurn: boolean;
-    currentPlayer: 1 | 2;
-    selectedPiece: SelectedPieceInfo | null;
+    currentPlayer: Player;
+    selectedPiece: PieceInfo | null;
     wonByBlocking: boolean;
     wonByReachingTop: boolean;
 }
 
 const initialState: GameState = {
     isFirstTurn: true,
-    currentPlayer: 1,
+    currentPlayer: Player.First,
     selectedPiece: null,
     wonByBlocking: false,
     wonByReachingTop: false,
@@ -33,16 +27,16 @@ export const gameSlice = createSlice({
         setIsFirstTurn: (state, action: PayloadAction<boolean>) => {
             state.isFirstTurn = action.payload;
         },
-        setCurrentPlayer: (state, action: PayloadAction<1 | 2>) => {
+        setCurrentPlayer: (state, action: PayloadAction<Player>) => {
             state.currentPlayer = action.payload;
         },
         swapCurrentPlayer: (state) => {
-            state.currentPlayer = (3 - state.currentPlayer) as 1 | 2;
+            state.currentPlayer =
+                state.currentPlayer === Player.First
+                    ? Player.Second
+                    : Player.First;
         },
-        setSelectedPiece: (
-            state,
-            action: PayloadAction<SelectedPieceInfo | null>
-        ) => {
+        setSelectedPiece: (state, action: PayloadAction<PieceInfo | null>) => {
             state.selectedPiece = action.payload;
         },
         setWonByBlocking: (state, action: PayloadAction<boolean>) => {

@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { createSelector } from 'reselect';
 import { FIELD_SIZE } from '../../constants';
+import { Player } from '../../enums/player';
 import { ColorType } from '../../types';
 import type { State } from '../store';
 
 export interface FieldPiece {
-    player: 1 | 2;
+    player: Player;
     type: ColorType;
 }
 
@@ -14,7 +15,7 @@ type FieldState = Array<Array<FieldPiece | null>>;
 const initialState: FieldState = [
     // Top line of pieces for the second player.
     Array.from({ length: FIELD_SIZE }).map((_, i) => ({
-        player: 2,
+        player: Player.Second,
         type: i as ColorType,
     })),
 
@@ -25,7 +26,7 @@ const initialState: FieldState = [
 
     // Bottom line of pieces for the first player.
     Array.from({ length: FIELD_SIZE }).map((_, i) => ({
-        player: 1,
+        player: Player.First,
         type: (7 - i) as ColorType,
     })),
 ];
@@ -40,7 +41,7 @@ export const fieldSlice = createSlice({
                 x: number;
                 y: number;
                 value: null | {
-                    player: 1 | 2;
+                    player: Player;
                     type: ColorType;
                 };
             }>
