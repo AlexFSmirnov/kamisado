@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
-import { FIELD_MAX_SIZE } from '../../constants/field';
+import { FIELD_MAX_SIZE } from '../../constants';
 import { Field } from '../Field';
 import { GameContainer, GameFieldContainer } from './style';
 
