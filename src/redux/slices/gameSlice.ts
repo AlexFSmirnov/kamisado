@@ -14,12 +14,16 @@ interface GameState {
     isFirstTurn: boolean;
     currentPlayer: 1 | 2;
     selectedPiece: SelectedPieceInfo | null;
+    wonByBlocking: boolean;
+    wonByReachingTop: boolean;
 }
 
 const initialState: GameState = {
     isFirstTurn: true,
     currentPlayer: 1,
     selectedPiece: null,
+    wonByBlocking: false,
+    wonByReachingTop: false,
 };
 
 export const gameSlice = createSlice({
@@ -35,8 +39,17 @@ export const gameSlice = createSlice({
         swapCurrentPlayer: (state) => {
             state.currentPlayer = (3 - state.currentPlayer) as 1 | 2;
         },
-        setSelectedPiece: (state, action: PayloadAction<SelectedPieceInfo>) => {
+        setSelectedPiece: (
+            state,
+            action: PayloadAction<SelectedPieceInfo | null>
+        ) => {
             state.selectedPiece = action.payload;
+        },
+        setWonByBlocking: (state, action: PayloadAction<boolean>) => {
+            state.wonByBlocking = action.payload;
+        },
+        setWonByReachingTop: (state, action: PayloadAction<boolean>) => {
+            state.wonByReachingTop = action.payload;
         },
     },
 });
@@ -46,6 +59,8 @@ export const {
     setCurrentPlayer,
     swapCurrentPlayer,
     setSelectedPiece,
+    setWonByBlocking,
+    setWonByReachingTop,
 } = gameSlice.actions;
 
 export const getGameState = (state: State) => state.game;

@@ -1,10 +1,13 @@
-import { FIELD_CONFIGURATION } from '../constants';
+import { FIELD_CONFIGURATION, FIELD_SIZE } from '../constants';
+import { getAvailableTiles } from './selectors';
 import { getField, setFieldTileValue } from './slices/fieldSlice';
 import {
     getCurrentPlayer,
     getSelectedPieceInfo,
     setIsFirstTurn,
     setSelectedPiece,
+    setWonByBlocking,
+    setWonByReachingTop,
     swapCurrentPlayer,
 } from './slices/gameSlice';
 import { changePiecePosition, getPieces } from './slices/piecesSlice';
@@ -13,9 +16,10 @@ import { State, Dispatch } from './store';
 export const moveTileTo =
     ({ x, y }: { x: number; y: number }) =>
     (dispatch: Dispatch, getState: () => State) => {
+        dispatch(setIsFirstTurn(false));
+
         const state = getState();
 
-        const field = getField(state);
         const pieces = getPieces(state);
         const currentPlayer = getCurrentPlayer(state);
         const selectedPieceInfo = getSelectedPieceInfo(state);
@@ -36,13 +40,26 @@ export const moveTileTo =
             setFieldTileValue({ x, y, value: { player: currentPlayer, type } })
         );
         dispatch(setFieldTileValue({ x: oldX, y: oldY, value: null }));
-        dispatch(swapCurrentPlayer());
+
+        if (
+            (currentPlayer === 1 && y === 0) ||
+            (currentPlayer === 2 && y === FIELD_SIZE - 1)
+        ) {
+            dispatch(setWonByReachingTop(true));
+            dispatch(setSelectedPiece(null));
+            return;
+        }
+
         dispatch(
             setSelectedPiece({
                 index: newSelectedPieceIndex,
                 ...newSelectedPiece,
             })
         );
+        dispatch(swapCurrentPlayer());
 
-        dispatch(setIsFirstTurn(false));
+        if (!getAvailableTiles(getState())?.length) {
+            dispatch(swapCurrentPlayer());
+            dispatch(setWonByBlocking(true));
+        }
     };
