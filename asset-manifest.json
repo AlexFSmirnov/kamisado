@@ -1,0 +1,11 @@
+{
+  "files": {
+    "main.js": "/kamisado/static/js/main.d06e58f2.js",
+    "service-worker.js": "/kamisado/service-worker.js",
+    "index.html": "/kamisado/index.html",
+    "main.d06e58f2.js.map": "/kamisado/static/js/main.d06e58f2.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.d06e58f2.js"
+  ]
+}
