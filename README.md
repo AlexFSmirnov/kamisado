@@ -15,5 +15,6 @@ The goal of the game is to reach your opponent's Home Row with one of your drago
 React, Redux, TypeScript, styled-components.
 
 ## Demo
+[Try it yourself](https://alexfsmirnov.github.io/kamisado/)  
 
 ![example](IMAGES/example.gif)
