@@ -42,7 +42,6 @@ export const moveTileTo =
         const newSelectedColorType = FIELD_CONFIGURATION[y][x];
         // @ts-ignore Cannot use union types as object keys
         const newSelectedPiece = pieces[newPlayer][newSelectedColorType];
-        console.log({ newPlayer, newSelectedColorType, newSelectedPiece });
 
         dispatch(changePiecePosition({ player: currentPlayer, type, x, y }));
         dispatch(

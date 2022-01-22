@@ -9,7 +9,6 @@ export const getAvailableTiles = createSelector(
     getCurrentPlayer,
     getSelectedPieceInfo,
     (field, currentPlayer, selectedPieceInfo) => {
-        console.log({ selectedPieceInfo });
         if (selectedPieceInfo === null) {
             return null;
         }

@@ -23,8 +23,6 @@ const Field: React.FC<FieldProps> = ({
     availableTiles,
     selectedPieceInfo,
 }) => {
-    console.log({ pieces, availableTiles, selectedPieceInfo });
-
     return (
         <FieldContainer>
             <FieldBackground />

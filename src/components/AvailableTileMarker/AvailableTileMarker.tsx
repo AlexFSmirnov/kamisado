@@ -33,7 +33,6 @@ const AvailableTileMarker: React.FC<AvailableTileMarkerProps> = ({
     moveTileTo,
 }) => {
     const handleMarkerClick = () => {
-        console.log('marker clicked');
         moveTileTo({ x, y });
     };
 

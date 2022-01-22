@@ -8,13 +8,7 @@ import {
     getWonByReachingTop,
 } from '../../../redux/slices/gameSlice';
 import MobileTextBlock from './MobileTextBlock';
-import {
-    OverlayContainer,
-    OverlayNote,
-    OverlaySubtitle,
-    OverlayTextContainer,
-    OverlayTitle,
-} from './style';
+import { OverlayContainer, OverlayTextContainer } from './style';
 
 interface OwnProps {
     active: boolean;

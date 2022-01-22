@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { createSelector } from 'reselect';
 import { FIELD_SIZE } from '../../constants';
 import { Player } from '../../enums/player';
 import { ColorType } from '../../types';
