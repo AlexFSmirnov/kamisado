@@ -61,13 +61,7 @@
         "extends": [
             "react-app",
             "prettier"
-        ],
-        "rules": {
-            "@typescript-eslint/quotes": [
-                "error",
-                "single"
-            ]
-        }
+        ]
     },
     "browserslist": {
         "production": [

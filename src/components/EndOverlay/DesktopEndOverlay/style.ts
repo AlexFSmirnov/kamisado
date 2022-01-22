@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const EndScreenContainer = styled.div<{ active: boolean }>`
+export const OverlayContainer = styled.div<{ active: boolean }>`
     position: absolute;
     top: 0;
     left: 0;
@@ -18,7 +18,7 @@ export const EndScreenContainer = styled.div<{ active: boolean }>`
     ${(props) => (props.active ? '' : 'pointer-events: none;')}
 `;
 
-export const EndScreenTextContainer = styled.div`
+export const OverlayTextContainer = styled.div`
     width: 100%;
     height: 100%;
     margin: 32px;
@@ -29,18 +29,18 @@ export const EndScreenTextContainer = styled.div`
     align-items: center;
 `;
 
-export const EndScreenTitle = styled.h1`
+export const OverlayTitle = styled.h1`
     font-size: 56pt;
     text-align: center;
 `;
 
-export const EndScreenSubtitle = styled.h2`
+export const OverlaySubtitle = styled.h2`
     padding-top: 32px;
     font-size: 24pt;
     text-align: center;
 `;
 
-export const EndScreenNote = styled.span`
+export const OverlayNote = styled.span`
     padding-top: 48px;
     font-size: 16pt;
     opacity: 0.7;

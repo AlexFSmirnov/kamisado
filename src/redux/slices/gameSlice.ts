@@ -19,7 +19,7 @@ const initialState: GameState = {
     currentPlayer: Player.First,
     selectedPiece: null,
     wonByBlocking: false,
-    wonByReachingTop: true,
+    wonByReachingTop: false,
 };
 
 export const gameSlice = createSlice({
