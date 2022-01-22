@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { FIELD_SIZE } from '../constants';
 import { Player } from '../enums/player';
-import { getField } from './slices/fieldSlice';
+import { getField } from './slices/piecesSlice';
 import { getCurrentPlayer, getSelectedPieceInfo } from './slices/gameSlice';
 
 export const getAvailableTiles = createSelector(
@@ -21,7 +21,7 @@ export const getAvailableTiles = createSelector(
         for (let offset = 1; offset < FIELD_SIZE; ++offset) {
             const y = startY + offset * yStep;
 
-            if (y < 0 || y >= FIELD_SIZE || field[y][startX] !== null) {
+            if (y < 0 || y >= FIELD_SIZE || field[y][startX]) {
                 break;
             }
 
@@ -41,7 +41,7 @@ export const getAvailableTiles = createSelector(
                 y >= FIELD_SIZE ||
                 x < 0 ||
                 x >= FIELD_SIZE ||
-                field[y][x] !== null
+                field[y][x]
             ) {
                 break;
             }
@@ -62,7 +62,7 @@ export const getAvailableTiles = createSelector(
                 y >= FIELD_SIZE ||
                 x < 0 ||
                 x >= FIELD_SIZE ||
-                field[y][x] !== null
+                field[y][x]
             ) {
                 break;
             }

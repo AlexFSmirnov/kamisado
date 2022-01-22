@@ -69,8 +69,21 @@ export const piecesSlice = createSlice({
 export const { changePiecePosition, resetPieces } = piecesSlice.actions;
 
 export const getPieces = (state: State) => state.pieces;
+
 export const getPiecesList = createSelector(getPieces, (pieces) =>
     Object.values(pieces).map(Object.values).flat()
 );
+
+export const getField = createSelector(getPiecesList, (pieces) => {
+    let field = Array.from({ length: FIELD_SIZE }).map((_) =>
+        Array.from({ length: FIELD_SIZE }).map((_) => false)
+    );
+
+    pieces.forEach(({ x, y }) => {
+        field[y][x] = true;
+    });
+
+    return field;
+});
 
 export default piecesSlice.reducer;
