@@ -13,4 +13,5 @@ export const GameFieldContainer = styled.div<{ size: number }>`
     height: ${(props) => props.size}px;
 
     box-shadow: 0 0 8px black;
+    border-radius: 16px;
 `;

@@ -13,7 +13,7 @@ interface UIState {
 }
 
 const initialState: UIState = {
-    screen: AppScreen.Game,
+    screen: AppScreen.Menu,
 };
 
 export const uiSlice = createSlice({

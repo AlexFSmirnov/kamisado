@@ -10,7 +10,7 @@
         "prettier": "prettier --check \"./src/**/*.{js,jsx,ts,tsx}\"",
         "lint": "node_modules/.bin/eslint \"./src/**/*.{js,jsx,ts,tsx}\"",
         "predeploy": "yarn typescript && yarn prettier && yarn lint && yarn build",
-        "deploy": "gh-pages -d build"
+        "deploy": "yarn predeploy && gh-pages -d build"
     },
     "dependencies": {
         "@reduxjs/toolkit": "^1.7.1",
