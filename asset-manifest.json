@@ -1,11 +1,13 @@
 {
   "files": {
-    "main.js": "/kamisado/static/js/main.d06e58f2.js",
+    "main.js": "/kamisado/static/js/main.fc5f9590.js",
     "service-worker.js": "/kamisado/service-worker.js",
+    "static/media/cpu.svg": "/kamisado/static/media/cpu.f7bb5dfa3d517f6d01308ed6496fa8fe.svg",
     "index.html": "/kamisado/index.html",
-    "main.d06e58f2.js.map": "/kamisado/static/js/main.d06e58f2.js.map"
+    "static/media/human.svg": "/kamisado/static/media/human.4ffbb863702fdb173d95bd51851d17aa.svg",
+    "main.fc5f9590.js.map": "/kamisado/static/js/main.fc5f9590.js.map"
   },
   "entrypoints": [
-    "static/js/main.d06e58f2.js"
+    "static/js/main.fc5f9590.js"
   ]
 }
