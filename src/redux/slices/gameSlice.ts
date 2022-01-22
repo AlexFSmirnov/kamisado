@@ -6,6 +6,7 @@ import { PieceInfo } from './piecesSlice';
 
 interface GameState {
     isFirstTurn: boolean;
+    lastFirstPlayer: Player;
     currentPlayer: Player;
     selectedPiece: PieceInfo | null;
     wonByBlocking: boolean;
@@ -14,10 +15,11 @@ interface GameState {
 
 const initialState: GameState = {
     isFirstTurn: true,
+    lastFirstPlayer: Player.First,
     currentPlayer: Player.First,
     selectedPiece: null,
     wonByBlocking: false,
-    wonByReachingTop: false,
+    wonByReachingTop: true,
 };
 
 export const gameSlice = createSlice({
@@ -45,16 +47,33 @@ export const gameSlice = createSlice({
         setWonByReachingTop: (state, action: PayloadAction<boolean>) => {
             state.wonByReachingTop = action.payload;
         },
+        resetGame: (state) => {
+            const newFirstPlayer =
+                state.lastFirstPlayer === Player.First
+                    ? Player.Second
+                    : Player.First;
+
+            state = {
+                isFirstTurn: true,
+                lastFirstPlayer: newFirstPlayer,
+                currentPlayer: newFirstPlayer,
+                selectedPiece: null,
+                wonByBlocking: false,
+                wonByReachingTop: false,
+            };
+
+            return state;
+        },
     },
 });
 
 export const {
     setIsFirstTurn,
-    setCurrentPlayer,
     swapCurrentPlayer,
     setSelectedPiece,
     setWonByBlocking,
     setWonByReachingTop,
+    resetGame,
 } = gameSlice.actions;
 
 export const getGameState = (state: State) => state.game;
@@ -62,6 +81,11 @@ export const getGameState = (state: State) => state.game;
 export const getIsFirstTurn = createSelector(
     getGameState,
     (state) => state.isFirstTurn
+);
+
+export const getLastFirstPlayer = createSelector(
+    getGameState,
+    (state) => state.lastFirstPlayer
 );
 
 export const getCurrentPlayer = createSelector(
@@ -72,6 +96,16 @@ export const getCurrentPlayer = createSelector(
 export const getSelectedPieceInfo = createSelector(
     getGameState,
     (state) => state.selectedPiece
+);
+
+export const getWonByBlocking = createSelector(
+    getGameState,
+    (state) => state.wonByBlocking
+);
+
+export const getWonByReachingTop = createSelector(
+    getGameState,
+    (state) => state.wonByReachingTop
 );
 
 export default gameSlice.reducer;

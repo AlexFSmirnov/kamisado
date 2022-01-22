@@ -1,17 +1,23 @@
 import { FIELD_CONFIGURATION, FIELD_SIZE } from '../constants';
 import { Player } from '../enums/player';
-import { getAvailableTiles } from './selectors';
-import { getField, setFieldTileValue } from './slices/fieldSlice';
+import { resetField, setFieldTileValue } from './slices/fieldSlice';
 import {
     getCurrentPlayer,
     getSelectedPieceInfo,
+    resetGame,
     setIsFirstTurn,
     setSelectedPiece,
     setWonByBlocking,
     setWonByReachingTop,
     swapCurrentPlayer,
 } from './slices/gameSlice';
-import { changePiecePosition, getPieces } from './slices/piecesSlice';
+import {
+    changePiecePosition,
+    getPieces,
+    resetPieces,
+} from './slices/piecesSlice';
+import { AppScreen, setScreen } from './slices/uiSlice';
+import { getAvailableTiles } from './selectors';
 import { State, Dispatch } from './store';
 
 export const moveTileTo =
@@ -50,6 +56,11 @@ export const moveTileTo =
         ) {
             dispatch(setWonByReachingTop(true));
             dispatch(setSelectedPiece(null));
+
+            window.setTimeout(() => {
+                dispatch(setScreen(AppScreen.End));
+            }, 300);
+
             return;
         }
 
@@ -60,5 +71,16 @@ export const moveTileTo =
             dispatch(swapCurrentPlayer());
             dispatch(setWonByBlocking(true));
             dispatch(setSelectedPiece(null));
+
+            window.setTimeout(() => {
+                dispatch(setScreen(AppScreen.End));
+            }, 300);
         }
     };
+
+export const startNewGame = () => (dispatch: Dispatch) => {
+    dispatch(resetGame());
+    dispatch(resetField());
+    dispatch(resetPieces());
+    dispatch(setScreen(AppScreen.Game));
+};

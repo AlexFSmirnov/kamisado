@@ -62,10 +62,11 @@ export const piecesSlice = createSlice({
             // @ts-ignore Cannot use union types as object keys
             state[player][type] = action.payload;
         },
+        resetPieces: () => initialState,
     },
 });
 
-export const { changePiecePosition } = piecesSlice.actions;
+export const { changePiecePosition, resetPieces } = piecesSlice.actions;
 
 export const getPieces = (state: State) => state.pieces;
 export const getPiecesList = createSelector(getPieces, (pieces) =>

@@ -49,15 +49,12 @@ export const fieldSlice = createSlice({
             const { x, y, value } = action.payload;
             state[y][x] = value;
         },
+        resetField: () => initialState,
     },
 });
 
-export const { setFieldTileValue } = fieldSlice.actions;
+export const { setFieldTileValue, resetField } = fieldSlice.actions;
 
 export const getField = (state: State) => state.field;
-// export const getFieldTest = createSelector(
-//     getFieldState,
-//     (state) => state.test
-// );
 
 export default fieldSlice.reducer;
