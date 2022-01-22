@@ -30,4 +30,8 @@ export const Title = styled.h1`
     @media (max-width: 320px) {
         font-size: 40px;
     }
+
+    @media (max-width: 500px) {
+        padding-bottom: 256px;
+    }
 `;
