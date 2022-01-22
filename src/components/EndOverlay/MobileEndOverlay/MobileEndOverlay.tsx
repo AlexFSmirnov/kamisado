@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Player } from '../../../enums/player';
@@ -35,13 +36,29 @@ const MobileEndOverlay: React.FC<OverlayProps> = ({
     active,
     currentPlayer,
     wonByBlocking,
-    wonByReachingTop,
     startNewGame,
 }) => {
-    const wonSubtitle = wonByBlocking
+    const [winningPlayer, setWinningPlayer] = useState(currentPlayer);
+    const [persistentWonByBlocking, setPersistentWonByBlocking] =
+        useState(wonByBlocking);
+
+    useEffect(() => {
+        if (active) {
+            setWinningPlayer(currentPlayer);
+            setPersistentWonByBlocking(wonByBlocking);
+        }
+    }, [
+        active,
+        currentPlayer,
+        wonByBlocking,
+        setWinningPlayer,
+        setPersistentWonByBlocking,
+    ]);
+
+    const wonSubtitle = persistentWonByBlocking
         ? wonByBlockingSubtitle
         : wonByReachingTopSubtitle;
-    const lostSubtitle = wonByBlocking
+    const lostSubtitle = persistentWonByBlocking
         ? lostByBlockingSubtitle
         : lostByReachingTopSubtitle;
 
@@ -51,20 +68,20 @@ const MobileEndOverlay: React.FC<OverlayProps> = ({
                 <MobileTextBlock
                     flipped
                     title={
-                        currentPlayer === Player.Second ? wonTitle : lostTitle
+                        winningPlayer === Player.Second ? wonTitle : lostTitle
                     }
                     subtitle={
-                        currentPlayer === Player.Second
+                        winningPlayer === Player.Second
                             ? wonSubtitle
                             : lostSubtitle
                     }
                 />
                 <MobileTextBlock
                     title={
-                        currentPlayer === Player.First ? wonTitle : lostTitle
+                        winningPlayer === Player.First ? wonTitle : lostTitle
                     }
                     subtitle={
-                        currentPlayer === Player.First
+                        winningPlayer === Player.First
                             ? wonSubtitle
                             : lostSubtitle
                     }

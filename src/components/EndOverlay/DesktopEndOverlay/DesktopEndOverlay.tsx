@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Player } from '../../../enums/player';
@@ -34,26 +34,41 @@ const DesktopEndOverlay: React.FC<OverlayProps> = ({
     active,
     currentPlayer,
     wonByBlocking,
-    wonByReachingTop,
     startNewGame,
 }) => {
+    const [winningPlayer, setWinningPlayer] = useState(currentPlayer);
+    const [persistentWonByBlocking, setPersistentWonByBlocking] =
+        useState(wonByBlocking);
+
+    useEffect(() => {
+        if (active) {
+            setWinningPlayer(currentPlayer);
+            setPersistentWonByBlocking(wonByBlocking);
+        }
+    }, [
+        active,
+        currentPlayer,
+        wonByBlocking,
+        setWinningPlayer,
+        setPersistentWonByBlocking,
+    ]);
+
     useEffect(() => {
         document.addEventListener('keydown', startNewGame);
     }, [startNewGame]);
 
     const winningPlayerName =
-        currentPlayer === Player.First ? 'Circles' : 'Squares';
+        winningPlayer === Player.First ? 'Circles' : 'Squares';
 
     return (
         <OverlayContainer active={active} onClick={startNewGame}>
             <OverlayTextContainer>
                 <OverlayTitle>{winningPlayerName} won!</OverlayTitle>
-                {wonByBlocking && (
+                {persistentWonByBlocking ? (
                     <OverlaySubtitle>
                         The opponent can't make a move
                     </OverlaySubtitle>
-                )}
-                {wonByReachingTop && (
+                ) : (
                     <OverlaySubtitle>
                         Their tile reached the opponent's side
                     </OverlaySubtitle>
